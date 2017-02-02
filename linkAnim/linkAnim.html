@@ -20,14 +20,6 @@
       text-align: right;
       width: 40px;
     }
-    #SRCdiv {
-      font-family: courier;
-      color: white;
-      position: absolute;
-      top: 390px;
-      text-align: right;
-      width: 40px;
-    }
   </style>
 </head>
 <body>
@@ -35,7 +27,6 @@
     <img id="sprite" src="linkd1.jpg"/>
   </div>
   <div id="valueContainer"></div>
-  <div id="SRCdiv"></div>
   <script>
     var xDirection = 2;
     var yDirection = 0;
@@ -89,7 +80,6 @@
       }
 
       sprite.src = ("link" + facing + frame + ".jpg");
-      document.getElementById("SRCdiv").innerHTML = sprite.src.slice(52, 62);
     }
     setInterval(elMove, 10);
     setInterval(chgImg, 150);
