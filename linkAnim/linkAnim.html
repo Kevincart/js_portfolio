@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>It's dangerous to go alone!</title>
+  <style>
+    html {background-color: black;}
+    #link {
+      position: absolute;
+      font: 12px arial;
+      top: 4px;
+      left: 10px;
+      height: 300px;
+    }
+    #valueContainer {
+      font-family: courier;
+      color: white;
+      position: absolute;
+      top: 350px;
+      text-align: right;
+      width: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div id="link">
+    <img id="sprite" src="linkd1.jpg"/>
+  </div>
+  <div id="valueContainer"></div>
+  <script>
+    var xDirection = 2;
+    var yDirection = 0;
+    var facing = "r";
+    var frame = 0;
+
+    function elMove() {
+      var linkEl = document.getElementById("link");
+      var sprite = document.getElementById("sprite");
+      var currentLeft = linkEl.offsetLeft;
+      var currentTop = linkEl.offsetTop;
+
+        if (currentLeft >= 250 && currentTop <= 4) {
+          xDirection = 0;
+          yDirection = 2;
+          facing = "d";
+          sprite.src = ("linkd0.jpg");
+        }
+        if (currentLeft >= 250 && currentTop >= 250) {
+          xDirection = -2;
+          yDirection = 0;
+          facing = "l";
+          sprite.src = ("linkl0.jpg");
+        }
+        if (currentLeft <= 4 && currentTop >= 250) {
+          xDirection = 0;
+          yDirection = -2;
+          facing = "u"
+          sprite.src = ("linku0.jpg");
+        }
+        if (currentLeft <= 4 && currentTop <= 4) {
+          xDirection = 2;
+          yDirection = 0;
+          facing = "r"
+          sprite.src = ("linkr0.jpg");
+        }
+
+      var newPosx = currentLeft + xDirection;
+      var newPosy = currentTop + yDirection;
+      linkEl.style.left = newPosx + "px";
+      linkEl.style.top = newPosy + "px";
+      document.getElementById("valueContainer").innerHTML = currentLeft + "X"
+        + "<br/>" + currentTop + "Y";
+    }
+
+    function chgImg() {
+      if (frame ==0) {
+        frame = 1;
+      } else {
+        frame = 0;
+      }
+
+      sprite.src = ("link" + facing + frame + ".jpg");
+    }
+    setInterval(elMove, 10);
+    setInterval(chgImg, 150);
+  </script>
+</body>
+</html>
