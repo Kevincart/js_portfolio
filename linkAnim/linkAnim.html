@@ -21,7 +21,23 @@
       position: absolute;
       top: 350px;
       text-align: right;
-      width: 40px;
+      width: 80px;
+    }
+    .button {
+      position: absolute;
+      width: 70px;
+      height: 20px;
+      background-color: darkblue;
+      top: 410px;
+      color: white;
+    }
+    .button-click {
+      position: absolute;
+      width: 70px;
+      height: 20px;
+      background-color: red;
+      top: 410px;
+      color: white;
     }
   </style>
 </head>
@@ -35,11 +51,15 @@
     <img id="sprite" src="linkd1.jpg"/>
   </div>
   <div id="valueContainer"></div>
+  <div id="button" class="button"></div>
   <script>
     var xDirection = 2;
     var yDirection = 0;
     var facing = "r";
     var frame = 0;
+    var reverse = false;
+
+    var buttonEl = document.getElementById("button");
 
     function elMove() {
       var linkEl = document.getElementById("link");
@@ -48,28 +68,60 @@
       var currentTop = linkEl.offsetTop;
 
         if (currentLeft >= 250 && currentTop <= 4) {
-          xDirection = 0;
-          yDirection = 2;
-          facing = "d";
-          sprite.src = ("linkd0.jpg");
+          if (reverse === false) {
+            xDirection = 0;
+            yDirection = 2;
+            facing = "d";
+            sprite.src = ("linkd0.jpg");
+          } else {
+            xDirection = -2;
+            yDirection = 0;
+            facing = "l";
+            sprite.src = ("linkl0.jpg");
+          }
+
         }
         if (currentLeft >= 250 && currentTop >= 250) {
-          xDirection = -2;
-          yDirection = 0;
-          facing = "l";
-          sprite.src = ("linkl0.jpg");
+          if (reverse === false) {
+            xDirection = -2;
+            yDirection = 0;
+            facing = "l";
+            sprite.src = ("linkl0.jpg");
+          } else {
+            xDirection = 0;
+            yDirection = -2;
+            facing = "u";
+            sprite.src = ("linku0.jpg");
+          }
+
         }
         if (currentLeft <= 4 && currentTop >= 250) {
-          xDirection = 0;
-          yDirection = -2;
-          facing = "u"
-          sprite.src = ("linku0.jpg");
+          if (reverse === false) {
+            xDirection = 0;
+            yDirection = -2;
+            facing = "u"
+            sprite.src = ("linku0.jpg");
+          } else {
+            xDirection = 2;
+            yDirection = 0;
+            facing = "r"
+            sprite.src = ("linkr0.jpg");
+          }
+
         }
         if (currentLeft <= 4 && currentTop <= 4) {
-          xDirection = 2;
-          yDirection = 0;
-          facing = "r"
-          sprite.src = ("linkr0.jpg");
+          if (reverse === false) {
+            xDirection = 2;
+            yDirection = 0;
+            facing = "r"
+            sprite.src = ("linkr0.jpg");
+          } else {
+            xDirection = 0;
+            yDirection = 2;
+            facing = "d"
+            sprite.src = ("linkd0.jpg");
+          }
+
         }
 
       var newPosx = currentLeft + xDirection;
@@ -86,11 +138,41 @@
       } else {
         frame = 0;
       }
-
-      sprite.src = ("link" + facing + frame + ".jpg");
+    sprite.src = ("link" + facing + frame + ".jpg");
     }
+
+    function buttonHandler(e) {
+      var elTarget = e.target;
+      var type = e.type;
+
+      if (elTarget.className == "button") {
+        elTarget.className = "button-click";
+        reverse = true;
+        /*
+        if (xDirection == 2) xDirection = -2;
+        if (xDirection == -2) xDirection = 2;
+
+        if (yDirection == 2) yDirection = -2;
+        if (yDirection == -2) yDirection = 2;
+        */
+      } else if (elTarget.className == "button-click") {
+        elTarget.className = "button"
+        reverse = false;
+        /*
+        if (xDirection == -2) xDirection = 2;
+        if (xDirection == 2) xDirection = -2;
+
+        if (yDirection == -2) yDirection = 2;
+        if (yDirection == 2) yDirection = -2;
+        */
+      }
+  // Add button style changes here;
+
+  }
+
     setInterval(elMove, 10);
     setInterval(chgImg, 150);
+    buttonEl.addEventListener("click", buttonHandler);
 
   </script>
 </body>
