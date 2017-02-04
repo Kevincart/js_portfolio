@@ -176,15 +176,16 @@
       var elTarget = e.target;
       var type = e.type;
 
-      if (elTarget.className == "button clockwise") {
-        elTarget.className = "button anti-clockwise";
+      if (elTarget.classList.contains("clockwise")) {
+        elTarget.classList.remove("clockwise");
+        elTarget.classList.add("anti-clockwise");
         reverse = true;
-      } else if (elTarget.className == "button anti-clockwise") {
-        elTarget.className = "button clockwise"
+      } else if (elTarget.classList.contains("anti-clockwise")) {
+        elTarget.classList.remove("anti-clockwise");
+        elTarget.classList.add("clockwise");
         reverse = false;
       }
-
-  }
+    }
 
     //Movement and Animation function calls, event handler assignment
     setInterval(elMove, 10);
