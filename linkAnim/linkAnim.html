@@ -23,49 +23,39 @@
       text-align: right;
       width: 80px;
     }
-    .button-clockwise {
+    .button {
       position: absolute;
-      background-color: #080;
       width: 100px;
       border: none;
       border-radius: 4px;
       padding: 12px 20px;
       top: 345px;
       left: 110px;
-      color: white;
       font-family: Tahoma, sans-serif;;
       font-size: 15px;
+    }
+    .clockwise {
+      background-color: #080;
+      color: white;
       box-shadow: 0 4px #040;
     }
-    .button-clockwise:active {
+    .clockwise:active {
       background-color: #080;
       transform: translateY(4px);
       box-shadow: none;
     }
-    .button-clockwise:focus {
+    .button:focus {
       outline: none;
     }
-    .button-anti-clockwise {
-      position: absolute;
+    .anti-clockwise {
       background-color: #e80000;
-      width: 100px;
-      border: none;
-      border-radius: 4px;
-      padding: 12px 20px;
-      top: 345px;
-      left: 110px;
       color: black;
-      font-family: Tahoma, sans-serif;
-      font-size: 15px;
       box-shadow: 0 4px #a70000;
     }
-    .button-anti-clockwise:active {
+    .anti-clockwise:active {
       background-color: #e80000;
       transform: translateY(4px);
       box-shadow: none;
-    }
-    .button-anti-clockwise:focus {
-      outline: none;
     }
   </style>
 </head>
@@ -80,7 +70,7 @@
     <img id="sprite" src="linkd1.jpg"/>
   </div>
   <div id="valueContainer"></div>
-  <button type="button" id="button1" class="button-clockwise">Reverse</button>
+  <button type="button" id="button1" class="button clockwise">Reverse</button>
 
   <script>
     //Declare global variables
@@ -186,11 +176,11 @@
       var elTarget = e.target;
       var type = e.type;
 
-      if (elTarget.className == "button-clockwise") {
-        elTarget.className = "button-anti-clockwise";
+      if (elTarget.className == "button clockwise") {
+        elTarget.className = "button anti-clockwise";
         reverse = true;
-      } else if (elTarget.className == "button-anti-clockwise") {
-        elTarget.className = "button-clockwise"
+      } else if (elTarget.className == "button anti-clockwise") {
+        elTarget.className = "button clockwise"
         reverse = false;
       }
 
