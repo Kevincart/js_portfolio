@@ -25,41 +25,52 @@
     }
     .button {
       position: absolute;
-      width: 70px;
-      height: 20px;
-      background-color: darkgreen;
-      border-radius: 2px;
-      top: 410px;
+      background-color: #080;
+      width: 100px;
+      border: none;
+      border-radius: 4px;
+      padding: 12px 20px;
+      top: 345px;
+      left: 110px;
       color: white;
-      text-indent: 5px;
-      font-family: sans-serif;
+      font-family: Tahoma, sans-serif;;
       font-size: 15px;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      cursor: pointer;
+      box-shadow: 0 4px #040;
+    }
+    .button:active {
+      background-color: #3e8e41;
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
+    .button:focus {
+      outline: none;
     }
     .button-click {
       position: absolute;
-      width: 70px;
-      height: 20px;
-      background-color: red;
-      border-radius: 2px;
-      top: 410px;
+      background-color: #e80000;
+      width: 100px;
+      border: none;
+      border-radius: 4px;
+      padding: 12px 20px;
+      top: 345px;
+      left: 110px;
       color: black;
-      text-indent: 5px;
-      font-family: sans-serif;
+      font-family: Tahoma, sans-serif;
       font-size: 15px;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      cursor: pointer;
+      box-shadow: 0 4px #a70000;
+    }
+    .button-click:active {
+      background-color: #3e8e41;
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
+    .button-click:focus {
+      outline: none;
     }
   </style>
 </head>
 <body>
+
   <div id="imgLoader">
     <img src="linkd0.jpg"></img><img src="linkd1.jpg"></img><img src="linkl0.jpg"></img>
     <img src="linkl1.jpg"></img><img src="linkr0.jpg"></img><img src="linkr1.jpg"></img>
@@ -69,8 +80,10 @@
     <img id="sprite" src="linkd1.jpg"/>
   </div>
   <div id="valueContainer"></div>
-  <div id="button" class="button">Reverse</div>
+  <button type="button" id="button" class="button">Reverse</button>
+
   <script>
+    //Declare global variables
     var xDirection = 2;
     var yDirection = 0;
     var facing = "r";
@@ -79,12 +92,15 @@
 
     var buttonEl = document.getElementById("button");
 
+    // This function handles 'Link' element movements, using CSS style.left and
+    // style.top properties.
     function elMove() {
       var linkEl = document.getElementById("link");
       var sprite = document.getElementById("sprite");
       var currentLeft = linkEl.offsetLeft;
       var currentTop = linkEl.offsetTop;
 
+        //Behavior when 'Link' element reaches top right corner
         if (currentLeft >= 250 && currentTop <= 4) {
           if (reverse === false) {
             xDirection = 0;
@@ -97,8 +113,9 @@
             facing = "l";
             sprite.src = ("linkl0.jpg");
           }
-
         }
+
+        //Behavior when 'Link' element reaches bottom right corner
         if (currentLeft >= 250 && currentTop >= 250) {
           if (reverse === false) {
             xDirection = -2;
@@ -111,8 +128,9 @@
             facing = "u";
             sprite.src = ("linku0.jpg");
           }
-
         }
+
+        // Behavior when 'Link' element reaches bottom left corner
         if (currentLeft <= 4 && currentTop >= 250) {
           if (reverse === false) {
             xDirection = 0;
@@ -125,8 +143,9 @@
             facing = "r"
             sprite.src = ("linkr0.jpg");
           }
-
         }
+
+        // Behavior when 'Link' element reaches top left corner
         if (currentLeft <= 4 && currentTop <= 4) {
           if (reverse === false) {
             xDirection = 2;
@@ -139,19 +158,22 @@
             facing = "d"
             sprite.src = ("linkd0.jpg");
           }
-
         }
 
+      //Gets position, add or subtracts 'Direction' for X and/or Y.
       var newPosx = currentLeft + xDirection;
       var newPosy = currentTop + yDirection;
       linkEl.style.left = newPosx + "px";
       linkEl.style.top = newPosy + "px";
+
+      //Gets and prints coordinates to valueContainer class Div
       document.getElementById("valueContainer").innerHTML = currentLeft + "X"
         + "<br/>" + currentTop + "Y";
     }
 
+    //Handles sprite animation, applies filename for sprite
     function chgImg() {
-      if (frame ==0) {
+      if (frame ===0) {
         frame = 1;
       } else {
         frame = 0;
@@ -159,6 +181,7 @@
     sprite.src = ("link" + facing + frame + ".jpg");
     }
 
+    //Handles button pressing actions
     function buttonHandler(e) {
       var elTarget = e.target;
       var type = e.type;
@@ -166,28 +189,14 @@
       if (elTarget.className == "button") {
         elTarget.className = "button-click";
         reverse = true;
-        /*
-        if (xDirection == 2) xDirection = -2;
-        if (xDirection == -2) xDirection = 2;
-
-        if (yDirection == 2) yDirection = -2;
-        if (yDirection == -2) yDirection = 2;
-        */
       } else if (elTarget.className == "button-click") {
         elTarget.className = "button"
         reverse = false;
-        /*
-        if (xDirection == -2) xDirection = 2;
-        if (xDirection == 2) xDirection = -2;
-
-        if (yDirection == -2) yDirection = 2;
-        if (yDirection == 2) yDirection = -2;
-        */
       }
-  // Add button style changes here;
 
   }
 
+    //Movement and Animation function calls, event handler assignment
     setInterval(elMove, 10);
     setInterval(chgImg, 150);
     buttonEl.addEventListener("click", buttonHandler);
