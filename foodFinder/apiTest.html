@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Food Finder Testing API</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 50%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="coords"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOiLnJKcEF6w19QJCv8S8C5XWW0PJVcLY&callback=initMap"
+    async defer></script>
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 15
+        });
+      }
+
+      function geoSuccess(position) {
+        var coords = position.coords;
+        var latitude = coords.latitude;
+        var longitude = coords.longitude;
+
+        var latFix = coords.latitude.toFixed(3);
+        var lngFix = coords.longitude.toFixed(3);
+
+        var message = "You're at " + latFix + ", " + lngFix;
+
+        console.log(message);
+
+        map = map.setCenter(new google.maps.LatLng(latFix, lngFix));
+      }
+
+      function geoError(errorObj) {
+        console.log(errorObj.message);
+      }
+
+      if (typeof navigator.geolocation != "undefined") {
+        navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+      } else {
+        alert("This page uses geolocation, and your " +
+              "browser doesn't support it.");
+      }
+    </script>
+  </body>
+</html>

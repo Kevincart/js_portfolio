@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <title>Places API Test</title>
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+    #map {
+      height: 100%;
+      display: none;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+      height: 80%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOiLnJKcEF6w19QJCv8S8C5XWW0PJVcLY&libraries=places&callback=initialize"
+      async defer></script>
+  <script>
+    var map;
+    var service;
+
+    //Initialization function, gets position, starts map object, makes request
+    function initialize() {
+      var wellington = new google.maps.LatLng(-41.300,174.776);
+
+      map = new google.maps.Map(document.getElementById('map'), {
+          center: wellington,
+          zoom: 15
+        });
+    }
+
+    function callback(results, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          var place = results[i];
+          console.log(results[i].name);
+        }
+      }
+    }
+
+    function geoSuccess(position) {
+      var coords = position.coords;
+      var latitude = coords.latitude;
+      var longitude = coords.longitude;
+
+      var latFix = coords.latitude.toFixed(3);
+      var lngFix = coords.longitude.toFixed(3);
+
+      var message = "You're at " + latFix + ", " + lngFix;
+
+      console.log(message);
+
+      foodFinder = new google.maps.LatLng(latFix, lngFix)
+
+      //map = map.setCenter(foodFinder);
+
+      var request = {
+        location: foodFinder,
+        radius: '400',
+        types: ['restaurant']
+      };
+
+      service = new google.maps.places.PlacesService(map);
+      service.nearbySearch(request, callback);
+    }
+
+    function geoError(errorObj) {
+      console.log(errorObj.message);
+    }
+
+    if (typeof navigator.geolocation != "undefined") {
+      navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+    } else {
+      alert("This page uses geolocation, and your " +
+            "browser doesn't support it.");
+    }
+  </script>
+</body>
+</html>
