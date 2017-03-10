@@ -5,30 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Food Finder</title>
   <style>
-
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #b7944e;
+      }
       #map {
         display: none;
       }
-      html, body {
-        height: 100%;
-        margin: 5px 10px 10px 10px;
-        padding: 0;
-        background-color: black
+      #logo {
+        font-family: 'Pacifico', cursive;
+        margin-left: 14px;
+        color: white;
+        font-size: 45px;
+        text-shadow: 2px 2px 5px black;
+        transform: rotate(-7deg);
       }
       #header {
+        background-image: linear-gradient(174deg, #ffbf3f,  #b7944e 70%, #b7944e);
+        width: 100%;
+        height: 150px;
+      }
+      p {
+        margin-top: 0px;
+      }
+      #statusBar {
         color: white;
         font-family: courier, monospace;
+        margin: 0px 10px 0px 20px;
       }
       #resultsContainer {
         color: #ffff70;
         font-family: courier, monospace;
-        margin: 40px 10px 30px 10px;
+        margin: 10px 10px 30px 22px;
       }
 
     </style>
   </head>
   <body>
-    <div id="header"></div>
+    <div id="header">
+      <div id="logo">
+        <p>Food Finder</p>
+      </div>
+    </div>
+    <div id="statusBar"></div>
     <div id="map"></div>
     <div id="resultsContainer"></div>
 
@@ -36,6 +57,7 @@
       </script>
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js">
         </script>
+        <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
 
     <script>
 
@@ -51,7 +73,7 @@
             zoom: 15
           });
 
-        $("#header").html("Finding food near you. (400 meter radius)...")
+        $("#statusBar").html("Finding food near you. (400 meter radius)...")
       }
 
       // Called by geolocation 'getCurrentPosition()' below...
@@ -61,7 +83,7 @@
         var posLng = coords.longitude;
         //sets coordinate pair in 'foodFinder'
         foodFinder = new google.maps.LatLng(posLat, posLng)
-        $("#header").html("You are at LAT:" + posLat.toFixed(3) + ", LONG:" + posLng.toFixed(3));
+        $("#statusBar").html("You are at LAT:" + posLat.toFixed(3) + ", LONG:" + posLng.toFixed(3));
         makeRequest();
       }
 
