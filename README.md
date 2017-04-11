@@ -7,6 +7,7 @@ Kevincart@gmail.com
 ###Food Finder
 A simple quick app for finding restaurants near you.
 Uses Javascript with jQuery with the Google Places API.
+
 [See the app in action here](https://kevincartwright.herokuapp.com/)
 This version is currently running on a custom Node.js server I have written.
 
