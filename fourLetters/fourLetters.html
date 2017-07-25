@@ -7,28 +7,35 @@
       color: white;
       font-family: 'helvetica neue';
     }
+    input {
+      margin-left: 20px;
+    }
   </style>
 </head>
 <body>
-  <h1>Summer of Tech Coding Challenge</h1>
-  <h2>Kevin Cartwright's Solution</h2>
-  <p>First select the dictionary file.</p>
-  <input type="file" accept="text/plain" onchange="openFile(event)"><br>
-  <p> Then input the characters you'd like to search on.</p>
+  <h1>Summer of Tech Coding Challenge
+  </h1>
+  <h3>Four Letters in Common
+  </h3>
+  <h2>Kevin Cartwright's Solution
+  </h2>
+  <p>First select the dictionary file (Newline separated .txt file only).
+  </p>
+  <input type="file" accept="text/plain" onchange="openFile(event)">
+  <br>
+  <p> Then input the characters you'd like to search on.
+  </p>
   <form class="search-form" onsubmit="return false">
-    <input class="search" type="text" maxlength="4" placeholder="Enter four letters" />
+    <input class="search" type="text" maxlength="8" placeholder="Enter four letters" />
     <input type="submit" />
   </form>
-  <ul class="list"></ul>
+  <p>(Please submit four letters, fewer may crash your browser!)
+  </p>
+  <ul class="list">
+  </ul>
   <script>
-    // Four Letters in Common
-    // Summer of Tech Code challenge
-    // Solution by Kevin Cartwright, 2017
-
     // Global variable definitions
     var dict;
-    var text;
-    var list = document.querySelector('.list');
 
     // FileReader function, reads dictionary file, returns 'dict' string
     var openFile = function(event) {
@@ -41,24 +48,34 @@
       reader.readAsText(input.files[0]);
     };
 
+    // Build regex to search
+    function buildRegex(e){
+      regex = "";
+      searchTerm = e.target.value;
+      regex = new RegExp(searchTerm, 'gi');
+      fourLettersInCommon(regex, dict);
+    }
+
     // Converts 'dict' string into array, then filters by supplied regex
-    function searchDict(regex, dict) {
+    function fourLettersInCommon(regex, dict) {
       darray = dict.split("\n");
       console.log(regex);
-
       var output = darray.filter(function(word){
         return word.match(regex);
       });
-      list.innerHTML = output;
-      console.log(output);
-
+      writeHTML(output);
     }
 
-    // Build regex to search
-    function buildRegex(e){
-      searchTerm = e.target.value;
-      regex = new RegExp(searchTerm, 'gi');
-      searchDict(regex, dict);
+    // Write result to DOM
+    function writeHTML(output){
+      var list = document.querySelector('.list');
+      list.innerHTML = "";
+      if(output.length === 0){list.innerHTML = "No Results"}
+      output.forEach(function(element){
+        thisElement = "<li>" + element + "</li>";
+        list.innerHTML += thisElement;
+      });
+      console.log(output);
     }
 
     // Get search form element, assign event listener
