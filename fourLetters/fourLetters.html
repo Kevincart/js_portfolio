@@ -4,40 +4,50 @@
 </head>
 <body>
   <input type="file" accept="text/plain" onchange="openFile(event)"><br>
-  <form class="search-form">
-    <input class="search" type="text" placeholder="Enter four letters to match">
+  <form class="search-form" onsubmit="return false">
+    <input class="search" type="text" maxlength="4" placeholder="Enter four letters" />
+    <input type="submit" />
   </form>
   <script>
     // Four Letters in Common
     // Summer of Tech Code challenge
     // Solution by Kevin Cartwright, 2017
+
+    // Global variable definitions
     var dict;
+    var text;
+
+    // FileReader function, reads dictionary file, returns 'dict' string
     var openFile = function(event) {
-    var input = event.target;
-
-    var reader = new FileReader();
-    reader.onload = function(){
-      dict = reader.result;
-      return dict;
+      var input = event.target;
+      var reader = new FileReader();
+      reader.onload = function(){
+        dict = reader.result;
+        return dict;
+      };
+      reader.readAsText(input.files[0]);
     };
-    reader.readAsText(input.files[0]);
-    };
 
+    // Searches 'dict' string with supplied regex
     function searchDict(regex, dict) {
-      console.log(dict.substring(0, 200));
+      console.log(regex);
+      var output = function (regex, dict){
+        dict.indexOf(regex);
+      };
+      console.log(output);
     }
 
-    function findMatches(wordToMatch, dict) {
-      return dict.filter(place => {
-        // here figure out if the city or state matches searched
-        const regex = new RegExp(wordToMatch, 'gi');
-        console.log(dict.match(regex));
-      });
+    // Build regex to search
+    function buildRegex(e){
+      console.log(e.target.value);
+      regex = new RegExp(e.value, 'gi');
+      return false;
+      // searchDict(regex, dict);
     }
 
-    const searchInput = document.querySelector('.search');
-
-    searchInput.addEventListener('change', findMatches);
+    // Get search form element, assign event listener
+    const searchInput = document.querySelector('.search-form');
+    searchInput.addEventListener('change', buildRegex);
 
   </script>
 </body>
