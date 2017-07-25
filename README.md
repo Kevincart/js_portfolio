@@ -15,3 +15,6 @@ This version is currently running on a custom Node.js server I have written.
 This is a javascript demo, demonstrating usage of javascript to animate a character sprite from Nintendo's The Legend of Zelda. The code creates a CSS-defined button that allows direction change.
 
 [See the page here](http://htmlpreview.github.io/?https://github.com/Kevincart/js_portfolio/blob/master/linkAnim/linkAnim.html)
+
+### Top Down
+This is a javascript demonstration of a top-down game, using WSAD keys to move the character.
