@@ -1,87 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <style>
-    html {
-      background-color: LightSlateGray;
-      color: white;
-      font-family: 'helvetica neue';
-    }
-    input {
-      margin-left: 20px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Summer of Tech Coding Challenge
-  </h1>
-  <h3>Four Letters in Common
-  </h3>
-  <h2>Kevin Cartwright's Solution
-  </h2>
-  <p>First select the dictionary file (Newline separated .txt file only).
-  </p>
-  <input type="file" accept="text/plain" onchange="openFile(event)">
-  <br>
-  <p> Then input the characters you'd like to search on.
-  </p>
-  <form class="search-form" onsubmit="return false">
-    <input class="search" type="text" maxlength="8" placeholder="Enter four letters" />
-    <input type="submit" />
-  </form>
-  <p>(Please submit four letters, fewer may crash your browser!)
-  </p>
-  <ul class="list">
-  </ul>
-  <script>
-    // Global variable definitions
-    var dict;
+  <head>
+    <style>
+      html {
+        background-color: LightSlateGray;
+        color: white;
+        font-family: 'helvetica neue', helvetica;
+      }
+      input {
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>
+      Summer of Tech Coding Challenge
+    </h1>
+    <h3>
+      Four Letters in Common
+    </h3>
+    <h2>
+      Kevin Cartwright's Solution
+    </h2>
+    <p>
+      First select the dictionary file (Newline separated .txt file only).
+    </p>
+    <input type="file" accept="text/plain" onchange="openFile(event)">
+    <br>
+    <p>
+      Then input the characters you'd like to search on.
+    </p>
+    <form class="search-form" onsubmit="return false">
+      <input class="search" type="text" maxlength="8" placeholder="Enter search term" />
+      <input type="submit" />
+    </form>
+    <p>
+      (Please submit four or more letters)
+    </p>
+    <ul class="list">
+    </ul>
 
-    // FileReader function, reads dictionary file, returns 'dict' string
-    var openFile = function(event) {
-      var input = event.target;
-      var reader = new FileReader();
-      reader.onload = function(){
-        dict = reader.result;
-        return dict;
+    <script>
+      // Global variable definitions
+      var dict;
+
+      // FileReader function, reads dictionary file, returns 'dict' string
+      var openFile = function(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function(){
+          dict = reader.result;
+          return dict;
+        };
+        reader.readAsText(input.files[0]);
       };
-      reader.readAsText(input.files[0]);
-    };
 
-    // Build regex to search
-    function buildRegex(e){
-      regex = "";
-      searchTerm = e.target.value;
-      regex = new RegExp(searchTerm, 'gi');
-      fourLettersInCommon(regex, dict);
-    }
+      // Build regex to search after correcting for varying length inputs
+      function buildRegex(e){
+        var regexHelper = [];
+        regex = "";
+        searchTerm = e.target.value;
+        if (searchTerm.length < 4){
+          catchPage();
+          return;
+        } else if (searchTerm.length == 4){
+          regexHelper.push(searchTerm);
+          regex = new RegExp(regexHelper, 'gi');
+          fourLettersInCommon(regex, dict);
+        } else if (searchTerm.length > 4) {
+          for (i = 0; i < (searchTerm.length-4); i++){
+            regexHelper.push(searchTerm.substring(i, i+4));
+          }
+          regex = new RegExp(regexHelper.join('|'), 'gi');
+          fourLettersInCommon(regex, dict);
+        }
+      }
 
-    // Converts 'dict' string into array, then filters by supplied regex
-    function fourLettersInCommon(regex, dict) {
-      darray = dict.split("\n");
-      console.log(regex);
-      var output = darray.filter(function(word){
-        return word.match(regex);
-      });
-      writeHTML(output);
-    }
+      // Converts 'dict' string into array, then filters by supplied regex
+      function fourLettersInCommon(regex, dict) {
+        darray = dict.split("\n");
+        console.log(regex);
+        var output = darray.filter(function(word){
+          return word.match(regex);
+        });
+        writeHTML(output);
+      }
 
-    // Write result to DOM
-    function writeHTML(output){
-      var list = document.querySelector('.list');
-      list.innerHTML = "";
-      if(output.length === 0){list.innerHTML = "No Results"}
-      output.forEach(function(element){
-        thisElement = "<li>" + element + "</li>";
-        list.innerHTML += thisElement;
-      });
-      console.log(output);
-    }
+      // Write result to DOM
+      function writeHTML(output){
+        var list = document.querySelector('.list');
+        list.innerHTML = "";
+        if(output.length === 0){list.innerHTML = "No Results"}
+        output.forEach(function(element){
+          thisElement = "<li>" + element + "</li>";
+          list.innerHTML += thisElement;
+        });
+        console.log(output);
+      }
 
-    // Get search form element, assign event listener
-    const searchInput = document.querySelector('.search-form');
-    searchInput.addEventListener('change', buildRegex);
+      // Catch less than 4 character input
+      function catchPage(){
+        alert("Please enter 4 or more characters.");
+      }
 
-  </script>
-</body>
+      // Get search form element, assign event listener
+      const searchInput = document.querySelector('.search-form');
+      searchInput.addEventListener('change', buildRegex);
+    </script>
+  </body>
 </html>
