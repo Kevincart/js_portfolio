@@ -28,17 +28,18 @@
       reader.readAsText(input.files[0]);
     };
 
-    // Searches 'dict' string with supplied regex
+    // Converts 'dict' string into array, then searches with supplied regex
     function searchDict(regex, dict) {
-      var output = dict.indexOf(regex);
+      darray = dict.split("\n");
+      console.log(regex);
+      var output = dict.match(regex);
       console.log(output);
-      console.log(dict.substring(0, 200));
+      //console.log(dict.substring(0, 200));
     }
 
     // Build regex to search
     function buildRegex(e){
       searchTerm = e.target.value;
-      console.log(searchTerm);
       regex = new RegExp(searchTerm, 'gi');
       searchDict(regex, dict);
     }
