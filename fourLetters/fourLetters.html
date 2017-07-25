@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+  <input type="file" accept="text/plain" onchange="openFile(event)"><br>
+  <form class="search-form">
+    <input class="search" type="text" placeholder="Enter four letters to match">
+  </form>
+  <script>
+    // Four Letters in Common
+    // Summer of Tech Code challenge
+    // Solution by Kevin Cartwright, 2017
+    var dict;
+    var openFile = function(event) {
+    var input = event.target;
+
+    var reader = new FileReader();
+    reader.onload = function(){
+      dict = reader.result;
+      return dict;
+    };
+    reader.readAsText(input.files[0]);
+    };
+
+    function searchDict(regex, dict) {
+      console.log(dict.substring(0, 200));
+    }
+
+    function findMatches(wordToMatch, dict) {
+      return dict.filter(place => {
+        // here figure out if the city or state matches searched
+        const regex = new RegExp(wordToMatch, 'gi');
+        console.log(dict.match(regex));
+      });
+    }
+
+    const searchInput = document.querySelector('.search');
+
+    searchInput.addEventListener('change', findMatches);
+
+  </script>
+</body>
+</html>
