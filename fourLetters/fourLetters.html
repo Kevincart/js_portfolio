@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <style>
+    html {
+      background-color: LightSlateGray;
+      color: white;
+      font-family: 'helvetica neue';
+    }
+  </style>
 </head>
 <body>
+  <h1>Summer of Tech Coding Challenge</h1>
+  <h2>Kevin Cartwright's Solution</h2>
+  <p>First select the dictionary file.</p>
   <input type="file" accept="text/plain" onchange="openFile(event)"><br>
+  <p> Then input the characters you'd like to search on.</p>
   <form class="search-form" onsubmit="return false">
     <input class="search" type="text" maxlength="4" placeholder="Enter four letters" />
     <input type="submit" />
   </form>
+  <ul class="list"></ul>
   <script>
     // Four Letters in Common
     // Summer of Tech Code challenge
@@ -16,6 +28,7 @@
     // Global variable definitions
     var dict;
     var text;
+    var list = document.querySelector('.list');
 
     // FileReader function, reads dictionary file, returns 'dict' string
     var openFile = function(event) {
@@ -28,13 +41,17 @@
       reader.readAsText(input.files[0]);
     };
 
-    // Converts 'dict' string into array, then searches with supplied regex
+    // Converts 'dict' string into array, then filters by supplied regex
     function searchDict(regex, dict) {
       darray = dict.split("\n");
       console.log(regex);
-      var output = dict.match(regex);
+
+      var output = darray.filter(function(word){
+        return word.match(regex);
+      });
+      list.innerHTML = output;
       console.log(output);
-      //console.log(dict.substring(0, 200));
+
     }
 
     // Build regex to search
