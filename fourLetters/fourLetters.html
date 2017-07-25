@@ -30,19 +30,17 @@
 
     // Searches 'dict' string with supplied regex
     function searchDict(regex, dict) {
-      console.log(regex);
-      var output = function (regex, dict){
-        dict.indexOf(regex);
-      };
+      var output = dict.indexOf(regex);
       console.log(output);
+      console.log(dict.substring(0, 200));
     }
 
     // Build regex to search
     function buildRegex(e){
-      console.log(e.target.value);
-      regex = new RegExp(e.value, 'gi');
-      return false;
-      // searchDict(regex, dict);
+      searchTerm = e.target.value;
+      console.log(searchTerm);
+      regex = new RegExp(searchTerm, 'gi');
+      searchDict(regex, dict);
     }
 
     // Get search form element, assign event listener
