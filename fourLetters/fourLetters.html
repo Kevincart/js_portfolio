@@ -68,7 +68,7 @@
           regex = new RegExp(regexHelper, 'gi');
           fourLettersInCommon(regex, dict);
         } else if (searchTerm.length > 4) {
-          for (i = 0; i < (searchTerm.length-4); i++){
+          for (i = 0; i <= (searchTerm.length-4); i++){
             regexHelper.push(searchTerm.substring(i, i+4));
           }
           regex = new RegExp(regexHelper.join('|'), 'gi');
