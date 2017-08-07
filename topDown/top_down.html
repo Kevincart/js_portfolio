@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Prototype Javacsript top-down game</title>
+  <title>Prototype Javascript top-down game</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html {
@@ -23,99 +23,63 @@
     }
     .Y {
       transform: rotate(90deg);
-      left: 51px;
-      top: 390px;
+      left: 52px;
+      top: 388px;
     }
   </style>
+</head>
 <body>
+  <!-- SVG GRAPHICS HERE -->
+    <svg width="123" height="120" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" viewBox="0 0 120 120">
+      <rect x="10" y="10" width="100" height="100" rx="15" ry="15" color="white"/>
+    </svg>
   <div class="sprite" id="sprite">@</div>
   <div class="controls X" id="controlsX">
 <pre>
-  < ✜ >
+  <  ✜  >
 </pre>
   </div>
   <div class="controls Y" id="controlsY">
 <pre>
-  < ✜ >
+  <  ✜  >
 </pre>
   </div>
-  <script>
+  <script id="game_engine">
     var game = {};
     var input = {};
     var playerObj = document.getElementById("sprite");
 
     function getInput(e) {
-      //alert(e.keyCode);
-      //alert(e.type);
       var keyVar = e.key;
 
       if (keyVar == "w") {
         input.up = true;
-        moveUp();
+        move(0, -10, input.up);
       }
       if (keyVar == "a") {
         input.left = true;
-        moveLeft();
+        move(-10, 0, input.left);
       }
       if (keyVar == "d") {
         input.right = true;
-        moveRight();
+        move(10, 0, input.right);
       }
       if (keyVar == "s") {
         input.down = true;
-        moveDown();
+        move(0, 10, move.down);
       }
 
     }
 
-    function moveDown() {
-      var xDirection = 0;
-      var yDirection = 10;
+    function move(dirX, dirY, key) {
       var currentLeft = playerObj.offsetLeft;
       var currentTop = playerObj.offsetTop;
-      var newPosx = currentLeft + xDirection;
-      var newPosy = currentTop + yDirection;
+      var newPosx = currentLeft + dirX;
+      var newPosy = currentTop + dirY;
       playerObj.style.left = newPosx + "px";
       playerObj.style.top = newPosy + "px";
-      input.down = false;
+      key = false;
     }
-
-    function moveUp() {
-      var xDirection = 0;
-      var yDirection = -10;
-      var currentLeft = playerObj.offsetLeft;
-      var currentTop = playerObj.offsetTop;
-      var newPosx = currentLeft + xDirection;
-      var newPosy = currentTop + yDirection;
-      playerObj.style.left = newPosx + "px";
-      playerObj.style.top = newPosy + "px";
-      input.up = false;
-    }
-
-    function moveLeft() {
-      var xDirection = -10;
-      var yDirection = 0;
-      var currentLeft = playerObj.offsetLeft;
-      var currentTop = playerObj.offsetTop;
-      var newPosx = currentLeft + xDirection;
-      var newPosy = currentTop + yDirection;
-      playerObj.style.left = newPosx + "px";
-      playerObj.style.top = newPosy + "px";
-      input.left = false;
-    }
-
-    function moveRight() {
-      var xDirection = 10;
-      var yDirection = 0;
-      var currentLeft = playerObj.offsetLeft;
-      var currentTop = playerObj.offsetTop;
-      var newPosx = currentLeft + xDirection;
-      var newPosy = currentTop + yDirection;
-      playerObj.style.left = newPosx + "px";
-      playerObj.style.top = newPosy + "px";
-      input.right = false;
-    }
-
     //Assign event handlers
     document.addEventListener("keypress", getInput);
     //Assign interval caller
