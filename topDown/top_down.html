@@ -77,8 +77,8 @@
       var currentTop = playerObj.offsetTop;
       var newLeft = currentLeft + dirX;
       var newTop = currentTop + dirY;
-      collision = checkCollision(newLeft);
-      collision = checkCollision(newTop);
+    
+      collision = checkEdgeCollision(newLeft, newTop);
 
       if (!collision) {var newPosx = newLeft}
       if (!collision) {var newPosy = newTop}
@@ -87,9 +87,8 @@
       key = false;
     }
 
-    function checkCollision (colVal) {
-        console.log(colVal);
-        if (colVal == 70 || colVal == -70) { return true }
+    function checkEdgeCollision (colValLeft, colValTop) {
+        if (colValLeft <= 50 | colValLeft >= 370 | colValTop <= 50 | colValTop >= 370) { return true };
     }
     //Assign event handlers
     document.addEventListener("keypress", getInput);
