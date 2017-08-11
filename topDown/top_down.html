@@ -79,19 +79,17 @@
       var newTop = currentTop + dirY;
       collision = checkCollision(newLeft);
       collision = checkCollision(newTop);
-      
-      console.log(collision);
-      
+
       if (!collision) {var newPosx = newLeft}
       if (!collision) {var newPosy = newTop}
       playerObj.style.left = newPosx + "px";
       playerObj.style.top = newPosy + "px";
       key = false;
     }
-      
+
     function checkCollision (colVal) {
         console.log(colVal);
-        if (colVal == 70) { return true }
+        if (colVal == 70 || colVal == -70) { return true }
     }
     //Assign event handlers
     document.addEventListener("keypress", getInput);
