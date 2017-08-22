@@ -18,13 +18,19 @@
       color: blue;
       font-size: 20px;
       font-weight: bolder;
-      left: 40px;
-      top: 422px;
+      left: 27px;
+      top: 460px;
     }
     .Y {
       transform: rotate(90deg);
       left: 52px;
       top: 412px;
+    }
+    #level_area {
+      color: #aaa;
+      position: absolute;
+      left: 64px;
+      top: 55px;
     }
   </style>
 </head>
@@ -35,15 +41,17 @@
     </svg>
   <div class="sprite" id="sprite">@</div>
   <div class="controls X" id="controlsX">
-<pre>
-  <  ✜  >
-</pre>
+    <pre>
+      <  ✜  >
+    </pre>
   </div>
   <div class="controls Y" id="controlsY">
-<pre>
-  <  ✜  >
-</pre>
+    <pre>
+      <  ✜  >
+    </pre>
   </div>
+<div id="level_area">
+</div>
   <script id="game_engine">
     var game = {};
     var input = {};
@@ -72,16 +80,18 @@
     }
 
     function move(dirX, dirY, key) {
-      var collision = false;
+      var edgeCollision = false;
+      var wallCollision = false;
       var currentLeft = playerObj.offsetLeft;
       var currentTop = playerObj.offsetTop;
       var newLeft = currentLeft + dirX;
       var newTop = currentTop + dirY;
-    
-      collision = checkEdgeCollision(newLeft, newTop);
 
-      if (!collision) {var newPosx = newLeft}
-      if (!collision) {var newPosy = newTop}
+      edgeCollision = checkEdgeCollision(newLeft, newTop);
+      wallCollision = checkLvlCollision(newLeft, newTop);
+
+      if (!edgeCollision && !wallCollision) {var newPosx = newLeft}
+      if (!edgeCollision && !wallCollision) {var newPosy = newTop}
       playerObj.style.left = newPosx + "px";
       playerObj.style.top = newPosy + "px";
       key = false;
@@ -90,8 +100,26 @@
     function checkEdgeCollision (colValLeft, colValTop) {
         if (colValLeft <= 50 | colValLeft >= 370 | colValTop <= 50 | colValTop >= 370) { return true };
     }
+
+    function checkLvlCollision(colValLeft, colValTop) {
+      const sprite = document.getElementById("sprite");
+      const wall = document.getElementById("level_area");
+      if (document.elementFromPoint(colValLeft, colValTop) == wall){
+        return true;
+      };
+    }
     //Assign event handlers
     document.addEventListener("keypress", getInput);
+  </script>
+  <script src="lvl_data.js"></script>
+  <script id="level_render">
+    console.log(lvl);
+
+    function renderLevel(render_lvl) {
+      var e = document.getElementById("level_area");
+      e.innerHTML = render_lvl;
+    }
+    renderLevel(lvl.a);
   </script>
 </body>
 </html>
