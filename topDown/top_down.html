@@ -98,13 +98,15 @@
     }
 
     function checkEdgeCollision (colValLeft, colValTop) {
-        if (colValLeft <= 50 | colValLeft >= 370 | colValTop <= 50 | colValTop >= 370) { return true };
+        if (colValLeft <= 60 | colValLeft >= 370 | colValTop <= 50 | colValTop >= 370) { return true };
     }
 
     function checkLvlCollision(colValLeft, colValTop) {
       const sprite = document.getElementById("sprite");
       const wall = document.getElementById("level_area");
-      if (document.elementFromPoint(colValLeft, colValTop) == wall){
+      
+      if ((colValLeft <= 50 | colValLeft >= 370 | colValTop <= 50 | colValTop >= 370) || 
+            (document.elementFromPoint(colValLeft, colValTop) == wall)){
         return true;
       };
     }
@@ -119,7 +121,7 @@
       var e = document.getElementById("level_area");
       e.innerHTML = render_lvl;
     }
-    renderLevel(lvl.a);
+    renderLevel(lvl.raw);
   </script>
 </body>
 </html>
